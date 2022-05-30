@@ -5,8 +5,10 @@
       <map>
         <entry key="../../../Library/Android/sdk/platforms/android-32/data/res/layout/activity_list_item.xml" value="0.19519927536231885" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
+        <entry key="presentation/src/main/res/drawable/splash_background_gradient.xml" value="0.1725" />
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
         <entry key="presentation/src/main/res/layout/activity_main2.xml" value="0.20104166666666667" />
+        <entry key="presentation/src/main/res/layout/activity_splash.xml" value="0.18467661539713548" />
       </map>
     </option>
   </component>

@@ -1,4 +1,4 @@
 package com.nenne.data
 
-class TestDataModule {
+class MyClass {
 }
