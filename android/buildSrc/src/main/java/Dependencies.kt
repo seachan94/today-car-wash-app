@@ -10,6 +10,8 @@ object Versions {
     const val LIFECYCLE_KTX = "2.3.1"
     const val ROOM = "2.3.0"
     const val CONSTRAINT_LAYOUT = "2.0.4"
+    const val NAVIGATOR = "2.4.2"
+    const val SPLASH_SCREEN = "1.0.0-beta01"
 
     const val HILT = "2.35.1"
     const val MATERIAL = "1.3.0"
@@ -43,6 +45,9 @@ object AndroidX {
     const val ROOM_COMPILER           = "androidx.room:room-compiler:${Versions.ROOM}"
 
     const val CONSTRAINT_LAYOUT       = "androidx.constraintlayout:constraintlayout:${Versions.CONSTRAINT_LAYOUT}"
+    const val NAVIGATOR_FRAGMENT      = "androidx.navigation:navigation-fragment-ktx:${Versions.NAVIGATOR}"
+    const val NAVIGATOR_UI            = "androidx.navigation:navigation-ui-ktx:${Versions.NAVIGATOR}"
+    const val SPLASH_SCREEN           = "androidx.core:core-splashscreen:${Versions.SPLASH_SCREEN}"
 }
 
 object Google {

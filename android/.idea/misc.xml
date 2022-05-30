@@ -9,6 +9,8 @@
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
         <entry key="presentation/src/main/res/layout/activity_main2.xml" value="0.20104166666666667" />
         <entry key="presentation/src/main/res/layout/activity_splash.xml" value="0.18467661539713548" />
+        <entry key="presentation/src/main/res/layout/fragment_login.xml" value="0.1" />
+        <entry key="presentation/src/main/res/layout/fragment_map.xml" value="0.20104166666666667" />
       </map>
     </option>
   </component>
