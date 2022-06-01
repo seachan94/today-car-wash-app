@@ -4,7 +4,7 @@
     <bytecodeTargetLevel target="1.8">
       <module name="carwash.app" target="11" />
       <module name="carwash.buildSrc" target="11" />
-      <module name="carwash.data" target="11" />
+      <module name="carwash.dataasd" target="11" />
       <module name="carwash.presentation" target="11" />
     </bytecodeTargetLevel>
   </component>
