@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.IdRes
-import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -25,14 +24,29 @@ abstract class BaseFragment<VB :ViewDataBinding>
     ): View {
         binding = DataBindingUtil.inflate(inflater,layoutId,container,false)
         binding.lifecycleOwner = viewLifecycleOwner
+        initViewStatus()
         return binding.root
     }
 
+    open fun initViewStatus() = Unit
+
+
+    protected fun navigateUp(destinationId: Int, inclusive: Boolean) {
+        if (parentFragmentManager.backStackEntryCount == 0) {
+            requireActivity().finish()
+        } else {
+            findNavController().popBackStack(destinationId, inclusive)
+        }
+    }
+    protected fun navigateUp() {
+        if (parentFragmentManager.backStackEntryCount == 0) {
+            requireActivity().finish()
+        } else {
+            findNavController().popBackStack()
+        }
+    }
     protected fun navigate(@IdRes actionResId: Int, bundle: Bundle? = null) {
         findNavController().navigate(actionResId, bundle)
     }
 
-    protected fun navigate(navDirections: NavDirections) {
-        findNavController().navigate(navDirections)
-    }
 }

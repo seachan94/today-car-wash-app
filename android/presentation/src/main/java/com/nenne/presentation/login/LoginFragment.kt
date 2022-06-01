@@ -13,4 +13,9 @@ import com.nocompany.presentation.databinding.FragmentLoginBinding
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login) {
 
+    override fun initViewStatus() =with(binding){
+        startBtn.setOnClickListener {
+            navigate(R.id.action_loginFragment_to_mapFragment)
+        }
+    }
 }

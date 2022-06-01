@@ -1,4 +1,4 @@
 <resources>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="splash_text">오늘 세차</string>
+    <string name="find_car_wash_shop">세차장 찾으러 가기</string>
 </resources>
