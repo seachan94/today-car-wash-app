@@ -6,7 +6,6 @@ plugins {
 }
 
 apply from: rootProject.file("android.gradle")
-
 dependencies {
 
     implementation project(':data')

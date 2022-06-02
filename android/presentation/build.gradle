@@ -27,5 +27,5 @@ dependencies {
 
     implementation(Google.MATERIAL)
     implementation(AndroidX.CONSTRAINT_LAYOUT)
-
+    implementation files('libs/libDaumMapAndroid.jar')
 }
