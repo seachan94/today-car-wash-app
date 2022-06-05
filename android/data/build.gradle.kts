@@ -11,4 +11,5 @@ java {
 dependencies {
     implementation(project(":domain"))
     implementation(Kotlin.KOTLIN_STDLIB)
+    implementation(Libraries.RETROFIT)
 }
