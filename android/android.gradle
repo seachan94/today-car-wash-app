@@ -1,6 +1,7 @@
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def kakao_Map_AppKey = properties.getProperty('kakao_map_app_key')
+
+
 android {
     compileSdkVersion 32
     buildToolsVersion "30.0.3"
@@ -13,8 +14,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "KAKAO_API_KEY", properties['kakao_map_app_key']
-        manifestPlaceholders = [KAKAO_MAP_API_KEY : kakao_Map_AppKey]
+        def KakaoNativeMapKey = properties.getProperty('kakao.navtive.key')
+        manifestPlaceholders = [KAKAO_MAP_NATIVE_KEY: KakaoNativeMapKey]
     }
 
     buildTypes {

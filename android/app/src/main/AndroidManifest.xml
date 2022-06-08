@@ -24,7 +24,7 @@
 
         <activity android:name="com.nenne.presentation.main.MainActivity"/>
 
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="${KAKAO_MAP_API_KEY}"/>
+        <meta-data android:name="com.kakao.sdk.AppKey" android:value="${KAKAO_MAP_NATIVE_KEY}"/>
     </application>
 
 </manifest>
