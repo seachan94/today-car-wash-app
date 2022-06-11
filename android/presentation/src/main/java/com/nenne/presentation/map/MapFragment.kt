@@ -26,7 +26,6 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map) {
                 (it.key == Manifest.permission.ACCESS_COARSE_LOCATION) ||
                         (it.key == Manifest.permission.ACCESS_FINE_LOCATION)
             }
-            Log.d("sechan", ": $responsePermissions")
             if(responsePermissions.filter { it.value == true }.size == locationPermission.size){
                 Toast.makeText(requireContext(),"위치 권한 설정이 완료.",Toast.LENGTH_SHORT).show()
                 drawMapView()
@@ -38,16 +37,17 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map) {
     override fun initViewStatus() = with(binding) {
 
         locationPermissionLauncher.launch(locationPermission)
-
+        searchHere.setOnClickListener {
+            detailLayer.visibility = View.GONE
+        }
+        filter.setOnClickListener {
+            detailLayer.visibility=View.VISIBLE
+        }
     }
 
     fun drawMapView() = with(binding){
-        val mapView = MapView(requireActivity())
-        clKakaoMapView.addView(mapView)
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.54892296550104, 126.99089033876304), true);
-
-        // 줌 레벨 변경
-        mapView.setZoomLevel(4, true);
+//        val mapView = MapView(requireActivity())
+//        kakaoMapView.addView(mapView)
     }
 
     companion object{

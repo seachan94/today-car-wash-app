@@ -6,10 +6,20 @@
         <entry key="../../../Library/Android/sdk/platforms/android-32/data/res/layout/activity_list_item.xml" value="0.19519927536231885" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.16770833333333332" />
+        <entry key="presentation/src/main/res/drawable/background_square_radius.xml" value="0.1085" />
+        <entry key="presentation/src/main/res/drawable/float_text.xml" value="0.1095" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.159" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.1095" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_directions_car_24.xml" value="0.1095" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_list_24.xml" value="0.1095" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_refresh_24.xml" value="0.1095" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_search_24.xml" value="0.159" />
+        <entry key="presentation/src/main/res/drawable/search_cardview_format.xml" value="0.249" />
+        <entry key="presentation/src/main/res/drawable/splash_background_gradient.xml" value="0.159" />
         <entry key="presentation/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
         <entry key="presentation/src/main/res/layout/activity_main2.xml" value="0.20104166666666667" />
         <entry key="presentation/src/main/res/layout/fragment_login.xml" value="0.215625" />
-        <entry key="presentation/src/main/res/layout/fragment_map.xml" value="0.1" />
+        <entry key="presentation/src/main/res/layout/fragment_map.xml" value="0.3509127789046653" />
       </map>
     </option>
   </component>

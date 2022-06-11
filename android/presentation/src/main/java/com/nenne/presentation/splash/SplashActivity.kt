@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun countSplashTime(){
         lifecycleScope.launch{
-            delay(1500L)
+//            delay(1500L)
             Intent(this@SplashActivity, MainActivity::class.java).run {
                 startActivity(this)
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out)

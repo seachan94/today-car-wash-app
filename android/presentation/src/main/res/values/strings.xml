@@ -1,4 +1,8 @@
 <resources>
     <string name="splash_text">오늘 세차</string>
     <string name="find_car_wash_shop">세차장 찾으러 가기</string>
+    <string name="search_place_or_wash_area">장소명 또는 세차장 검색</string>
+    <string name="show_list">목록보기</string>
+    <string name="search_here">여기에서 재검색</string>
+    <string name="filter">필터</string>
 </resources>
