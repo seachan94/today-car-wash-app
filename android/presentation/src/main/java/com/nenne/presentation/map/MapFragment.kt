@@ -46,8 +46,8 @@ class MapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map) {
     }
 
     fun drawMapView() = with(binding){
-//        val mapView = MapView(requireActivity())
-//        kakaoMapView.addView(mapView)
+        val mapView = MapView(requireActivity())
+        kakaoMapView.addView(mapView)
     }
 
     companion object{
