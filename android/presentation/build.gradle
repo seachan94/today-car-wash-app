@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'dagger.hilt.android.plugin'
 }
 
 apply from: rootProject.file("android.gradle")
@@ -26,8 +27,17 @@ dependencies {
     implementation(AndroidX.SPLASH_SCREEN)
 
     implementation(Google.MATERIAL)
+    implementation(Google.HILT_ANDROID)
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    kapt          (Google.HILT_ANDROID_COMPILER)
+
     implementation(AndroidX.CONSTRAINT_LAYOUT)
-    implementation files('libs/libDaumMapAndroid.jar')
+
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    implementation('com.naver.maps:map-sdk:3.15.0')
 
 }

@@ -14,8 +14,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        def KakaoNativeMapKey = properties.getProperty('kakao.navtive.key')
-        manifestPlaceholders = [KAKAO_MAP_NATIVE_KEY: KakaoNativeMapKey]
+        def NaverMapClientId = properties.getProperty('naver.map.client.id')
+        manifestPlaceholders = [NaverMapClientId: NaverMapClientId]
     }
 
     buildTypes {

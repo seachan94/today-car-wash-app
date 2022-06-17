@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.nenne.presentation.map.MapFragment"
+        android:name="com.nenne.presentation.map.CarWashMapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
 

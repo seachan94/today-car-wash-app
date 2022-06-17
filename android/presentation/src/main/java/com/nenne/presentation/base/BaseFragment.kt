@@ -28,6 +28,7 @@ abstract class BaseFragment<VB :ViewDataBinding>
         return binding.root
     }
 
+
     open fun initViewStatus() = Unit
 
 
