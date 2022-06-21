@@ -10,7 +10,8 @@ data class Item(
     var type : ShopType,
     val distance : Double,
     val latitude : Double,
-    val longtitude : Double
+    val longtitude : Double,
+    var num : Int
 )
 
 enum class ShopType{

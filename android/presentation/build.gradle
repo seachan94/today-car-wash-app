@@ -28,17 +28,21 @@ dependencies {
 
     implementation(Google.MATERIAL)
     implementation(Google.HILT_ANDROID)
-    implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
     kapt          (Google.HILT_ANDROID_COMPILER)
 
     implementation(AndroidX.CONSTRAINT_LAYOUT)
+    implementation (Libraries.OKHTTP)
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.google.code.gson:gson:2.8.9'
 
-    implementation('com.naver.maps:map-sdk:3.15.0')
-    implementation (Libraries.OKHTTP)
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.naver.maps:map-sdk:3.15.0'
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+
+
 
 }

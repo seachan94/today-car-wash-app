@@ -3,28 +3,33 @@ package com.nenne.presentation.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Color
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.UiThread
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Transformations.map
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapFragment
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.InfoWindow
 import com.nenne.domain.model.CarWashData
 import com.nenne.domain.model.Item
 import com.nenne.domain.model.ShopType
 import com.nenne.presentation.base.BaseFragment
 import com.nenne.presentation.util.LoadFakeDataFromAssets
 import com.nocompany.presentation.R
+import com.nocompany.presentation.databinding.CustomMakerBinding
 import com.nocompany.presentation.databinding.FragmentMapBinding
 
 
-class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map) {
+class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map),
+    OnMapReadyCallback {
 
     val TAG = "sechan"
     private val viewModel: MapViewModel by viewModels()
@@ -38,6 +43,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
             }
             if (responsePermissions.filter { it.value == true }.size == locationPermission.size) {
                 setMyLocation()
+                initializeNaverMap()
             } else {
                 Toast.makeText(requireContext(), "위치 권한 설정이 필요합니다.", Toast.LENGTH_SHORT).show()
             }
@@ -45,6 +51,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
 
     lateinit var mLocationManager: LocationManager
     val mLocationListener = LocationListener { doLocationChanged(it) }
+    lateinit var mNaverMap : NaverMap
 
     @SuppressLint("MissingPermission")
     fun setMyLocation() {
@@ -68,6 +75,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
 
     override fun initViewStatus() = with(binding) {
 
+        //퍼미션 체크 해야함
         locationPermissionLauncher.launch(locationPermission)
         location.setOnClickListener {
             detailLayer.visibility = View.GONE
@@ -79,9 +87,12 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
     }
 
 
-    fun drawMapView() = with(binding) {
-
-
+    fun initializeNaverMap() = with(binding) {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as MapFragment?
+            ?:MapFragment.newInstance().also{
+                childFragmentManager.beginTransaction().add(R.id.mapFragment,it).commit()
+            }
+        mapFragment.getMapAsync(this@CarWashMapFragment)
     }
 
 
@@ -92,22 +103,19 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
 
     }
 
-    private fun makeMarkerItems(item: List<Item>) =
-        item.map {
-
+    @UiThread
+    override fun onMapReady(naverMap: NaverMap) {
+        naverMap.uiSettings.apply{
+            isZoomControlEnabled = false
+        }
+        mNaverMap = naverMap.apply{
+            moveCamera(CameraUpdate.scrollTo(LatLng(37.5159317,127.0944873)))
         }
 
-    fun getFakeDataCarWashInfo() =
-        LoadFakeDataFromAssets(requireContext()).getObjectFromJson<CarWashData>("MockCarwashData.json",
-            CarWashData::class.java).item
-            .mapIndexed { idx, it ->
-                if (idx % 2 == 0) {
-                    it.type = ShopType.SELF
-                } else {
-                    it.type = ShopType.AUTO
-                }
-                it
-            }
+        testWindowInfo(naverMap)
+
+    }
+
 
     companion object {
         val locationPermission = arrayOf(
@@ -117,4 +125,36 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
     }
 
 
+
+    fun testWindowInfo(naverMap : NaverMap){
+        getFakeDataCarWashInfo().forEach{
+            with(it){
+                type = if(num ==1) ShopType.SELF else ShopType.AUTO
+            }
+            InfoWindow().apply{
+                adapter = object : InfoWindow.ViewAdapter(){
+                    override fun getView(p0: InfoWindow): View {
+                        return CustomMakerBinding.inflate(layoutInflater).apply{
+                            when(it.type){
+                                ShopType.AUTO ->{
+                                    shopName.text = "자동 세차"
+                                    carwashImg.setImageResource(R.drawable.location_black)
+                                    shopName.setTextColor(Color.BLACK)
+                                }
+                                else ->{
+                                    shopName.text = "셀프 세차"
+                                }
+                            }
+                        }.root
+                    }
+                }
+
+                position = LatLng(it.latitude,it.longtitude)
+                open(naverMap)
+            }
+        }
+    }
+    fun getFakeDataCarWashInfo() =
+        LoadFakeDataFromAssets(requireContext()).getObjectFromJson<CarWashData>("MockCarwashData.json",
+            CarWashData::class.java).item
 }
