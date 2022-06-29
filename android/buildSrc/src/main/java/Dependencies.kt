@@ -13,7 +13,7 @@ object Versions {
     const val NAVIGATOR = "2.4.2"
     const val SPLASH_SCREEN = "1.0.0-beta01"
 
-    const val HILT = "2.35.1"
+    const val HILT = "2.42"
     const val MATERIAL = "1.3.0"
 
     const val RETROFIT = "2.7.1"

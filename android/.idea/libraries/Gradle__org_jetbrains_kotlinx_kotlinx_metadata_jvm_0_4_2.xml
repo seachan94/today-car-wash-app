@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.4.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-metadata-jvm/0.4.2/8f80407e1e84727a7e7b9edd1323081c3ab1d8da/kotlinx-metadata-jvm-0.4.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-metadata-jvm/0.4.2/5b8f86fea035328fc9e8c660773037a3401ce25f/kotlinx-metadata-jvm-0.4.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-metadata-jvm/0.4.2/48cc63c0d045dd691a544bff88fae0eff8658312/kotlinx-metadata-jvm-0.4.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

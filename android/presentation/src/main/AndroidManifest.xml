@@ -3,9 +3,7 @@
     package="com.nocompany.presentation">
 
     <application>
-        <activity
-            android:name="com.nenne.presentation.Test"
-            android:exported="false" />
+
     </application>
 
 </manifest>

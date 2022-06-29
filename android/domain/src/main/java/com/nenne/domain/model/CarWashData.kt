@@ -1,17 +1,16 @@
 package com.nenne.domain.model
 
 data class CarWashData(
-    val item : List<Item>
+    val items : List<Item>
 )
 
 data class Item(
     val name : String,
     val address : String,
-    var type : ShopType,
+    var type : Int,
     val distance : Double,
     val latitude : Double,
-    val longtitude : Double,
-    var num : Int
+    val longitude : Double,
 )
 
 enum class ShopType{

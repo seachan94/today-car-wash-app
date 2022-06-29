@@ -16,6 +16,7 @@ android {
 
         def NaverMapClientId = properties.getProperty('naver.map.client.id')
         manifestPlaceholders = [NaverMapClientId: NaverMapClientId]
+        buildConfigField "String", "CAR_WASH_HEADER_KEY", properties['carwash.header']
     }
 
     buildTypes {
@@ -34,4 +35,5 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
 }
