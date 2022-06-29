@@ -1,6 +1,5 @@
 package com.nenne.data.mapper
 
-import com.google.common.graph.Network
 import com.nenne.domain.model.CarWashData
 import com.nenne.domain.model.state.NetworkResultState
 
