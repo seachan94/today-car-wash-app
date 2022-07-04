@@ -3,5 +3,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">map.naver.com</domain>
         <domain includeSubdomains="true">map.naver.net</domain>
+        <domain includeSubdomains="true">52.79.93.13</domain>
     </domain-config>
+
 </network-security-config>

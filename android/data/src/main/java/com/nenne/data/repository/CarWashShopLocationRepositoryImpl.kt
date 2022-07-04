@@ -1,5 +1,6 @@
 package com.nenne.data.repository
 
+import android.util.Log
 import com.nenne.data.api.CarWashApi
 import com.nenne.data.mapper.ResponseMapper
 import com.nenne.domain.model.Item
@@ -15,8 +16,6 @@ import javax.inject.Inject
 class CarWashShopLocationRepositoryImpl @Inject constructor(
     private val carWashApi: CarWashApi,
 ) : CarWashShopLocationRepository {
-
-
     override fun getCarWashShopAroundCurrent(
         latitude: Double,
         longitude: Double,
@@ -24,7 +23,7 @@ class CarWashShopLocationRepositoryImpl @Inject constructor(
     ): Flow<NetworkResultState<List<Item>>> = flow<NetworkResultState<List<Item>>> {
         emit(NetworkResultState.Loading)
         carWashApi.getCarWashShop(latitude, longitude, distance).run {
-            ResponseMapper.responseToCarWashShopList(this)
+            emit(ResponseMapper.responseToCarWashShopList(this))
         }
     }.catch { e->
         emit(NetworkResultState.Error(e))

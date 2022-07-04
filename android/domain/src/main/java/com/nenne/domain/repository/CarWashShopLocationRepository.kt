@@ -1,6 +1,6 @@
 package com.nenne.domain.repository
 
-import com.nenne.domain.model.CarWashData
+
 import com.nenne.domain.model.Item
 import com.nenne.domain.model.state.NetworkResultState
 import kotlinx.coroutines.flow.Flow

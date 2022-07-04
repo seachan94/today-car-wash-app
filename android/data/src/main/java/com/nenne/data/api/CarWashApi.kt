@@ -1,5 +1,6 @@
 package com.nenne.data.api
 
+import com.nenne.data.model.CarWash
 import com.nenne.domain.model.CarWashData
 import com.nenne.domain.model.state.NetworkResultState
 import retrofit2.http.GET
@@ -11,5 +12,5 @@ interface CarWashApi {
         @Query("latitude") latitude : Double,
         @Query("longitude") longitude : Double,
         @Query("distance") distance : Int
-    ) : NetworkResultState<CarWashData>
+    ) : NetworkResultState<CarWash>
 }

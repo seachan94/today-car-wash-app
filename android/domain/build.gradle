@@ -9,4 +9,5 @@ java {
 dependencies {
     implementation(Kotlin.KOTLIN_STDLIB)
     implementation(Kotlin.COROUTINES_CORE)
+    implementation("javax.inject:javax.inject:1")
 }

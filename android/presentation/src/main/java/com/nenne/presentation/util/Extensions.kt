@@ -1,5 +1,7 @@
 package com.nenne.presentation.util
 
+import com.naver.maps.geometry.LatLng
+
 
 fun Double.zoomToDistance() =
     when(this){
@@ -9,3 +11,6 @@ fun Double.zoomToDistance() =
         in 12.0..14.0 ->6
         else->4
     }
+
+infix fun Double.getLatLng(longitude : Double) : LatLng =
+    LatLng(this,longitude)

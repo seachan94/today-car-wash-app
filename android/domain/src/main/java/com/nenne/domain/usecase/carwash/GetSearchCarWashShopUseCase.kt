@@ -1,8 +1,11 @@
 package com.nenne.domain.usecase.carwash
 
 import com.nenne.domain.repository.CarWashShopLocationRepository
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GetSearchCarWashShopUseCase(
+@Singleton
+class GetSearchCarWashShopUseCase @Inject constructor(
     private val carWashShopLocationRepository: CarWashShopLocationRepository
 )
 {

@@ -1,6 +1,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="vm"
+            type="com.nenne.presentation.map.MapViewModel" />
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -161,11 +168,12 @@
                 android:id="@+id/shopImg"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/carwash"
                 android:layout_marginStart="10dp"
+                app:autoAndSelfImg = "@{vm.detailData.type}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:src="@drawable/self_text_img"/>
 
             <TextView
                 android:id="@+id/shopName"
@@ -173,7 +181,8 @@
                 android:layout_height="40dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="우리동네 세차장"
+                android:text="@{vm.detailData.name}"
+                android:maxLines="1"
                 android:gravity="center"
                 android:layout_marginStart="10dp"
                 app:layout_constraintTop_toTopOf="parent"
@@ -185,7 +194,7 @@
                 android:id="@+id/shopType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="셀프 세차"
+                android:text="@{vm.detailData.typeToTextView()}"
                 android:textSize="15sp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
@@ -193,15 +202,14 @@
                 app:layout_constraintTop_toBottomOf="@id/shopImg"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_square_radius"
                 android:backgroundTint="#00CCFF"
-                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:textColor="#ffffff"
-                android:text="2.6km"
+                android:text="@{vm.detailData.distanceToString()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
