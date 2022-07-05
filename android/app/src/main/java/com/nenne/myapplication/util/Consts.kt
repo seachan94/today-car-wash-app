@@ -6,5 +6,5 @@ object Consts {
     const val NAVER_REVERSE_GEOCORD_BASE_URL = "https://naveropenapi.apigw.ntruss.com/"
 
     const val CAR_WASH_BASE_URL = "http://52.79.93.13:8080"
-    //map-reversegeocode/v2/gc
+
 }

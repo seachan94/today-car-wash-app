@@ -25,4 +25,8 @@ object CommonNetWorkModule {
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class CarWashApi
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class ReverseGeoCord
 }

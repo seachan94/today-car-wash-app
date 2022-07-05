@@ -1,8 +1,8 @@
 package com.nenne.myapplication.di.network
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.nenne.data.api.service.CarWashService
 import com.nenne.data.api.retrofit.NetworkResponseFactory
+import com.nenne.data.api.service.NaverApiService
 import com.nenne.myapplication.util.Consts
 import com.nocompany.presentation.BuildConfig
 import dagger.Module
@@ -20,24 +20,25 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CarwashNetworkModule {
+object NaverReverseGeoCordNetworkModule {
 
-    @Provides
     @Singleton
-    @CommonNetWorkModule.CarWashApi
-    fun providesInterceptor() = Interceptor {
+    @Provides
+    @CommonNetWorkModule.ReverseGeoCord
+    fun providesInterceptor() = Interceptor{
         it.proceed(
             it.request().newBuilder()
-                .addHeader("x-api-key",BuildConfig.CAR_WASH_HEADER_KEY)
+                .addHeader(Consts.NAVER_CLIENT_ID_KEY_NAME, BuildConfig.NAVER_CLIENT_ID_VALUE)
+                .addHeader(Consts.NAVER_CLIENT_API_KEY_NAME, BuildConfig.NAVER_CLIENT_API_KEY_VALUE)
                 .build()
         )
     }
 
     @Singleton
     @Provides
-    @CommonNetWorkModule.CarWashApi
+    @CommonNetWorkModule.ReverseGeoCord
     fun providesOkHttpClient(
-        @CommonNetWorkModule.CarWashApi
+        @CommonNetWorkModule.ReverseGeoCord
         interceptor: Interceptor,
     ) = OkHttpClient.Builder().apply {
         hostnameVerifier { _, _ -> true }
@@ -46,26 +47,26 @@ object CarwashNetworkModule {
         connectTimeout(15, TimeUnit.SECONDS)
         writeTimeout(15, TimeUnit.SECONDS)
         readTimeout(15, TimeUnit.SECONDS)
-
     }.build()
 
     @Singleton
     @Provides
-    @CommonNetWorkModule.CarWashApi
+    @CommonNetWorkModule.ReverseGeoCord
     fun providesRetrofit(
-        @CommonNetWorkModule.CarWashApi
+        @CommonNetWorkModule.ReverseGeoCord
         okHttpClient: OkHttpClient,
         json: Json,
     ) = Retrofit.Builder().apply {
         addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         addCallAdapterFactory(NetworkResponseFactory())
         client(okHttpClient)
-        baseUrl(Consts.CAR_WASH_BASE_URL)
+        baseUrl(Consts.NAVER_REVERSE_GEOCORD_BASE_URL)
     }.build()
 
     @Singleton
     @Provides
-    fun providesCarWashApi(
-        @CommonNetWorkModule.CarWashApi  retrofit: Retrofit
-    ) = retrofit.create(CarWashService::class.java)
+    fun providesNaverApiService(
+        @CommonNetWorkModule.ReverseGeoCord
+        retrofit : Retrofit
+    ) = retrofit.create(NaverApiService::class.java)
 }

@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:text="서울 송파구"
+                    android:text="@{vm.resultReverseGeoCode}"
                     android:textColor="#000000"
                     android:textSize="16sp"
                     android:layout_marginTop="5dp"
@@ -76,7 +76,8 @@
                     app:drawableLeftCompat="@drawable/ic_baseline_directions_car_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardLine" />
+                    app:layout_constraintTop_toBottomOf="@id/cardLine"
+                    tools:text="위치 넣는 곳"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 

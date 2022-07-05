@@ -61,6 +61,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
     private val mLocationListener = LocationListener {
         viewModel.currentLocation = it.latitude getLatLng it.longitude
         initializeNaverMap()
+        viewModel.getReverseGeoCode()
     }
 
     private var infoWindows = mutableListOf<InfoWindow>()
@@ -69,12 +70,13 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
     override fun initViewStatus() = with(binding) {
         locationPermissionLauncher.launch(locationPermission)
         location.setOnClickListener { moveToCameraMyLocation() }
-//        filter.setOnClickListener { detailLayer.visibility = View.VISIBLE }
+        filter.setOnClickListener { }
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         searchHere.setOnClickListener { searchCarWashLocation() }
 
         observeData()
     }
+
 
     private fun initializeNaverMap() = with(binding) {
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as MapFragment?
@@ -204,6 +206,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
                 viewModel.currentLocation = it.latitude getLatLng it.longitude
             }
         }
+
         searchCarWashLocation()
     }
 

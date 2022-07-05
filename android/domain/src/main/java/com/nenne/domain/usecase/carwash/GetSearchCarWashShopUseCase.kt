@@ -1,6 +1,6 @@
 package com.nenne.domain.usecase.carwash
 
-import com.nenne.domain.repository.CarWashShopLocationRepository
+import com.nenne.domain.repository.carwash.CarWashShopLocationRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 

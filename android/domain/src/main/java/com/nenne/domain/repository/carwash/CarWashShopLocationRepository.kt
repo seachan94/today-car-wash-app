@@ -1,4 +1,4 @@
-package com.nenne.domain.repository
+package com.nenne.domain.repository.carwash
 
 
 import com.nenne.domain.model.Item
