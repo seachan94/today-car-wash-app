@@ -7,6 +7,7 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.NaverMap
 import com.nenne.domain.model.CarWashData
 import com.nenne.domain.model.Item
+import com.nenne.domain.model.ShopType
 import com.nenne.domain.model.state.NetworkResultState
 import com.nenne.domain.usecase.carwash.GetSearchCarWashShopUseCase
 import com.nenne.domain.usecase.naverapi.GetReverseGeoCodeUseCase
@@ -30,10 +31,12 @@ class MapViewModel @Inject constructor(
     val resultState: StateFlow<NetworkResultState<List<Item>>>
         get() = _resultState
 
-    var isFirstBooting = false
+
     var resultReverseGeoCode = MutableStateFlow( "위치 찾는 중")
+    var detailData = MutableStateFlow(Item("test","test",ShopType.AUTO,1.0,1.0,1.0))
     lateinit var currentLocation: LatLng
-    lateinit var detailData: Item
+    var isFirstBooting = false
+
 
     fun getCarWashShopAroundHere(latitude: Double, longitude: Double, distance: Int = 4) =
         viewModelScope.launch {

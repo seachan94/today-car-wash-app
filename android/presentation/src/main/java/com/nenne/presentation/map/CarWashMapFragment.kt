@@ -27,6 +27,7 @@ import com.nenne.domain.model.ShopType
 import com.nenne.domain.model.state.NetworkResultState
 import com.nenne.presentation.base.BaseFragment
 import com.nenne.presentation.util.getLatLng
+import com.nenne.presentation.util.setImgFromDrawable
 import com.nenne.presentation.util.zoomToDistance
 import com.nocompany.presentation.R
 import com.nocompany.presentation.databinding.CustomMakerBinding
@@ -73,7 +74,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         filter.setOnClickListener { }
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         searchHere.setOnClickListener { searchCarWashLocation() }
-
+        vm = viewModel
         observeData()
     }
 
@@ -143,7 +144,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         items.sortedBy { it.distance }
             .also {
                 if (it.isNotEmpty()) {
-//                    binding.detail = it[0]
+                    viewModel.detailData.value = it[0]
                     if (!viewModel.isFirstBooting) {
                         mNaverMap.moveCamera(CameraUpdate.scrollTo(it[0].latitude getLatLng it[0].longitude))
                         viewModel.isFirstBooting = true
@@ -159,7 +160,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
                         adapter = setWindowInfoAdapter(data.type)
                         position = data.latitude getLatLng data.longitude
                         setOnClickListener { _ ->
-//                            binding.detail = data
+                            viewModel.detailData.value = data
                             if (binding.detailLayer.isGone) {
                                 binding.detailLayer.visibility = View.VISIBLE
                             }
