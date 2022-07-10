@@ -1,10 +1,13 @@
 package com.nenne.domain.model
 
+import kotlinx.serialization.Serializable
 
+
+@Serializable
 data class CarWashData(
     val items : List<Item>
 )
-
+@Serializable
 data class Item(
     val name : String,
     val address : String,

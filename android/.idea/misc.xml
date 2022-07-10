@@ -7,6 +7,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.16770833333333332" />
         <entry key="presentation/src/main/res/drawable/background_square_radius.xml" value="0.1085" />
+        <entry key="presentation/src/main/res/drawable/background_text_info.xml" value="0.238" />
         <entry key="presentation/src/main/res/drawable/float_text.xml" value="0.1095" />
         <entry key="presentation/src/main/res/drawable/ic_baseline_add_24.xml" value="0.239" />
         <entry key="presentation/src/main/res/drawable/ic_baseline_arrow_back_ios_24.xml" value="0.159" />
@@ -15,6 +16,8 @@
         <entry key="presentation/src/main/res/drawable/ic_baseline_list_24.xml" value="0.1095" />
         <entry key="presentation/src/main/res/drawable/ic_baseline_refresh_24.xml" value="0.1095" />
         <entry key="presentation/src/main/res/drawable/ic_baseline_search_24.xml" value="0.159" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_textsms_24.xml" value="0.238" />
+        <entry key="presentation/src/main/res/drawable/ic_baseline_thumb_up_24.xml" value="0.238" />
         <entry key="presentation/src/main/res/drawable/location_black.xml" value="0.2215" />
         <entry key="presentation/src/main/res/drawable/marker_background.xml" value="0.171" />
         <entry key="presentation/src/main/res/drawable/search_cardview_format.xml" value="0.249" />
@@ -24,8 +27,10 @@
         <entry key="presentation/src/main/res/layout/activity_splash.xml" value="0.19655797101449277" />
         <entry key="presentation/src/main/res/layout/activity_test.xml" value="0.17798913043478262" />
         <entry key="presentation/src/main/res/layout/custom_maker.xml" value="0.5465994962216625" />
+        <entry key="presentation/src/main/res/layout/fragment_detail_car_wash_shop.xml" value="0.24292144775390626" />
         <entry key="presentation/src/main/res/layout/fragment_login.xml" value="0.215625" />
         <entry key="presentation/src/main/res/layout/fragment_map.xml" value="0.2789034564958284" />
+        <entry key="presentation/src/main/res/layout/price_info_layout.xml" value="0.25831298828125004" />
       </map>
     </option>
   </component>

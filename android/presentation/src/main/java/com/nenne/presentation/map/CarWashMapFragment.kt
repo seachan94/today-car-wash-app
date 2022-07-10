@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.UiThread
+import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -72,6 +73,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         locationPermissionLauncher.launch(locationPermission)
         location.setOnClickListener { moveToCameraMyLocation() }
         filter.setOnClickListener { }
+        detailLayer.setOnClickListener { navigate(R.id.action_mapFragment_to_detailCarWashShop) }
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         searchHere.setOnClickListener { searchCarWashLocation() }
         vm = viewModel

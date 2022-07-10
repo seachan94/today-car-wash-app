@@ -5,4 +5,17 @@
     <string name="show_list">목록보기</string>
     <string name="search_here">여기에서 재검색</string>
     <string name="filter">필터</string>
+    <string name="tools_car_wash_shop_name_text">오늘 세차 세차장 이름</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="price_of_car_wash">세차 가격</string>
+    <string name="notice_info">제보하기</string>
+    <string name="price_of_form">폼세차 가격</string>
+    <string name="price_txt_per_min_ex">1000원 (1분)</string>
+    <string name="price_of_bubble">거품세차 가격</string>
+    <string name="noti_for_data">오늘 세차는 가격 데이터를 수집 중이에요\n정확한 정보를 얻을 수 있도록 제보하기를 통해 세차장 가격을 알려주세요!</string>
+    <string name="info_of_carwash">세차장 정보</string>
+    <string name="review">댓글</string>
+    <string name="ready_review_system">댓글시스템을 곧 오픈합니다.</string>
+    <string name="ready">준비중</string>
 </resources>

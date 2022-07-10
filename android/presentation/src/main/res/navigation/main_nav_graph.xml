@@ -19,7 +19,23 @@
         android:id="@+id/mapFragment"
         android:name="com.nenne.presentation.map.CarWashMapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_detailCarWashShop"
+            app:destination="@id/detailCarWashShop" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/detailCarWashShop"
+        android:name="com.nenne.presentation.detail.DetailCarWashShop"
+        android:label="DetailCarWashShop"
+        tools:layout="@layout/fragment_detail_car_wash_shop">
+        <action
+            android:id="@+id/action_detailCarWashShop_to_mapFragment"
+            app:destination="@id/mapFragment" />
+
+    </fragment>
 
 
 </navigation>

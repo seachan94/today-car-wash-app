@@ -28,6 +28,7 @@ dependencies {
 
     implementation(Google.MATERIAL)
     implementation(Google.HILT_ANDROID)
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     kapt          (Google.HILT_ANDROID_COMPILER)
 
