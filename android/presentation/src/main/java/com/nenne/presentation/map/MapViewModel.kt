@@ -45,10 +45,9 @@ class MapViewModel @Inject constructor(
             }
         }
 
-    fun getReverseGeoCode() {
+    fun getReverseGeoCode( location : LatLng) {
         viewModelScope.launch {
-            getReverseGeoCodeUseCase("${currentLocation.longitude},${currentLocation.latitude}").collect {
-                Log.d(TAG, "getReverseGeoCode: $it")
+            getReverseGeoCodeUseCase("${location.longitude},${location.latitude}").collect {
                 when (it) {
                     is NetworkResultState.Success -> {
                         resultReverseGeoCode.value = it.data

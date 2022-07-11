@@ -39,5 +39,6 @@ data class Region(
 
 @Serializable
 data class Area(
-    val name: String
+    val name: String,
+    val alias : String = "None"
 )

@@ -18,4 +18,5 @@
     <string name="review">댓글</string>
     <string name="ready_review_system">댓글시스템을 곧 오픈합니다.</string>
     <string name="ready">준비중</string>
+    <string name="no_update">업데이트 없음</string>
 </resources>

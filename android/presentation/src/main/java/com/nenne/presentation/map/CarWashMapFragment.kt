@@ -21,7 +21,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import com.naver.maps.map.overlay.CircleOverlay
 import com.naver.maps.map.overlay.InfoWindow
+import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.util.FusedLocationSource
 import com.nenne.domain.model.Item
 import com.nenne.domain.model.ShopType
@@ -63,7 +65,6 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
     private val mLocationListener = LocationListener {
         viewModel.currentLocation = it.latitude getLatLng it.longitude
         initializeNaverMap()
-        viewModel.getReverseGeoCode()
     }
 
     private var infoWindows = mutableListOf<InfoWindow>()
@@ -73,9 +74,16 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         locationPermissionLauncher.launch(locationPermission)
         location.setOnClickListener { moveToCameraMyLocation() }
         filter.setOnClickListener { }
-        detailLayer.setOnClickListener { navigate(R.id.action_mapFragment_to_detailCarWashShop) }
+        detailLayer.setOnClickListener {
+            navigate(R.id.action_mapFragment_to_detailCarWashShop,
+            bundleOf("data" to viewModel.detailData.value))
+        }
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-        searchHere.setOnClickListener { searchCarWashLocation() }
+        searchHere.setOnClickListener {
+            searchCarWashLocation()
+
+            viewModel.getReverseGeoCode(mNaverMap.cameraPosition.target)
+        }
         vm = viewModel
         observeData()
     }
@@ -100,7 +108,6 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         val latitude = cameraPosition.target.latitude
         val longitude = cameraPosition.target.longitude
         val zoomLevel = cameraPosition.zoom
-        Log.d(TAG, "searchCarWashLocation: $latitude $longitude")
         viewModel.getCarWashShopAroundHere(latitude, longitude, zoomLevel.zoomToDistance())
     }
 
@@ -210,7 +217,10 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
             }
         }
 
+        viewModel.getReverseGeoCode(viewModel.currentLocation)
         searchCarWashLocation()
+
+      
     }
 
 

@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#000000"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:text="@{data.name}"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -89,7 +89,7 @@
                         android:drawablePadding="5dp"
                         android:text="단골 0명"
                         android:textColor="#000000"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         app:drawableLeftCompat="@drawable/ic_baseline_thumb_up_24"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -107,9 +107,9 @@
                         android:drawablePadding="5dp"
                         android:text="평점 0(0)"
                         android:textColor="#000000"
-                        android:textSize="10sp"
+                        android:textSize="15sp"
                         android:textStyle="bold"
-                        app:drawableLeftCompat="@drawable/ic_baseline_thumb_up_24"
+                        app:drawableLeftCompat="@drawable/ic_baseline_textsms_24"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/likeCount"
                         tools:drawableLeft="@drawable/ic_baseline_textsms_24"
@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/price_of_car_wash"
                         android:textColor="#000000"
-                        android:textSize="15sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -170,7 +170,7 @@
                             android:layout_weight="1"
                             android:text="@string/price_of_form"
                             android:textColor="#000000"
-                            android:textSize="10sp"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -181,7 +181,7 @@
                             android:layout_marginRight="10dp"
                             android:text="@string/ready"
                             android:textColor="#000000"
-                            android:textSize="15sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             tools:text="1000원 (1분)" />
 
@@ -190,8 +190,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textSize="10sp"
-                            android:text="@string/ready"
+                            android:textSize="15sp"
+                            android:text="@string/no_update"
                             android:textStyle="bold"
                             tools:text="2시간 전" />
                     </LinearLayout>
@@ -219,7 +219,7 @@
                             android:layout_weight="1"
                             android:text="@string/price_of_bubble"
                             android:textColor="#000000"
-                            android:textSize="10sp"
+                            android:textSize="15sp"
                             android:textStyle="bold" />
 
                         <TextView
@@ -230,7 +230,7 @@
                             android:layout_marginRight="10dp"
                             android:text="@string/ready"
                             android:textColor="#000000"
-                            android:textSize="15sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
                             tools:text="1000원 (1분)" />
 
@@ -239,9 +239,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:textSize="10sp"
+                            android:textSize="15sp"
                             android:textStyle="bold"
-                            android:text="@string/ready"
+                            android:text="@string/no_update"
                             tools:text="2시간 전" />
                     </LinearLayout>
                     <TextView
@@ -251,12 +251,14 @@
                         android:paddingEnd="10dp"
                         android:textColor="#767774"
                         android:textStyle="bold"
-                        android:textSize="10sp"
-                        android:drawableLeft="@drawable/ic_baseline_battery_3_bar_24"
+                        android:textSize="15sp"
+                        android:layout_marginTop="20dp"
                         android:text="@string/noti_for_data"
                         app:layout_constraintTop_toBottomOf="@id/bubble"
                         android:paddingTop="10dp"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:drawableLeftCompat="@drawable/ic_baseline_battery_3_bar_24"
+                        tools:drawableLeft="@drawable/ic_baseline_battery_3_bar_24"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -273,7 +275,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/review"
-                        android:textSize="16sp"
+                        android:textSize="20sp"
                         android:textStyle="bold"
                         android:textColor="#000000"
                         app:layout_constraintTop_toTopOf="parent"

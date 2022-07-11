@@ -15,7 +15,7 @@ data class Item(
     val distance : Double,
     val latitude : Double,
     val longitude : Double,
-){
+):java.io.Serializable {
     fun distanceToString() = "${distance.toInt()} KM"
     fun typeToTextView() = when(type){
         ShopType.AUTO -> "자동 세차"
@@ -23,6 +23,7 @@ data class Item(
     }
 }
 
+@Serializable
 enum class ShopType{
     AUTO, SELF
 }

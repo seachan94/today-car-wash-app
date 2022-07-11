@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.nenne.domain.model.Item
+import com.nenne.domain.model.ShopType
 import com.nenne.presentation.base.BaseFragment
 import com.nocompany.presentation.R
 import com.nocompany.presentation.databinding.FragmentDetailCarWashShopBinding
@@ -15,9 +16,8 @@ class DetailCarWashShop : BaseFragment<FragmentDetailCarWashShopBinding>(R.layou
 
 
     override fun initViewStatus() =with(binding){
-        val test = arguments?.get("data")
-        Log.d("sechan", "initViewStatus: $test")
-        binding.data = test as Item?
+        binding.data = arguments?.getSerializable("data") as Item
+        backBtn.setOnClickListener { navigateUp() }
     }
 
 }

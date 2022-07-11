@@ -1,9 +1,11 @@
 package com.nenne.data.mapper
 
+import android.util.Log
 import com.nenne.data.model.Region
 
 object NaverApiMapper {
 
     fun getAddressUsingReverseGeoCode(region : Region) =
-        "${region.area1.name} ${region.area2.name} ${region.area3.name}"
+         "${region.area1.alias} ${region.area3.name}"
+
 }
