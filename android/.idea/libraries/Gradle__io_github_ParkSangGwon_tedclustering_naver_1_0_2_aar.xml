@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: io.github.ParkSangGwon:tedclustering-naver:1.0.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c5c50131241bea8a0905f1b69a515259/transformed/jetified-tedclustering-naver-1.0.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c5c50131241bea8a0905f1b69a515259/transformed/jetified-tedclustering-naver-1.0.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c5c50131241bea8a0905f1b69a515259/transformed/jetified-tedclustering-naver-1.0.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.ParkSangGwon/tedclustering-naver/1.0.2/bbfbe64cf2921d1f0e0fbdd2ba068810c60254db/tedclustering-naver-1.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.ParkSangGwon/tedclustering-naver/1.0.2/babde8a37c25dbfab9b0a94ff10fea1c9b7b0e8c/tedclustering-naver-1.0.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

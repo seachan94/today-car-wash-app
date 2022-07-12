@@ -1,6 +1,8 @@
 package com.nenne.presentation.util
 
 import com.naver.maps.geometry.LatLng
+import com.nenne.domain.model.Item
+import com.nenne.presentation.model.ClusteredItem
 
 
 fun Double.zoomToDistance() =
@@ -12,5 +14,11 @@ fun Double.zoomToDistance() =
         else->4
     }
 
+fun Item.getClusteredItem() =
+    ClusteredItem(this.name,this.address,this.type, this.distance,this.latitude,this.longitude)
+
+
 infix fun Double.getLatLng(longitude : Double) : LatLng =
     LatLng(this,longitude)
+
+

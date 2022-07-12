@@ -1,10 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: androidx.databinding:databinding-ktx:7.1.1@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/adc247b5d2dd1717ebd772831d8149a8/transformed/jetified-databinding-ktx-7.1.1/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4df88c93ebfc2af05c727e90d7960725/transformed/jetified-databinding-ktx-7.1.1/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4df88c93ebfc2af05c727e90d7960725/transformed/jetified-databinding-ktx-7.1.1/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/4df88c93ebfc2af05c727e90d7960725/transformed/jetified-databinding-ktx-7.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4df88c93ebfc2af05c727e90d7960725/transformed/jetified-databinding-ktx-7.1.1/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4df88c93ebfc2af05c727e90d7960725/transformed/jetified-databinding-ktx-7.1.1/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

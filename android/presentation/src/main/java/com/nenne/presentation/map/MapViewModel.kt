@@ -11,6 +11,7 @@ import com.nenne.domain.model.ShopType
 import com.nenne.domain.model.state.NetworkResultState
 import com.nenne.domain.usecase.carwash.GetSearchCarWashShopUseCase
 import com.nenne.domain.usecase.naverapi.GetReverseGeoCodeUseCase
+import com.nenne.presentation.model.ClusteredItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,9 +34,9 @@ class MapViewModel @Inject constructor(
 
 
     var resultReverseGeoCode = MutableStateFlow( "위치 찾는 중")
-    var detailData = MutableStateFlow(Item("test","test",ShopType.AUTO,1.0,1.0,1.0))
+    var detailData = MutableStateFlow(ClusteredItem("test","test",ShopType.AUTO,1.0,1.0,1.0))
     lateinit var currentLocation: LatLng
-    var isFirstBooting = false
+
 
 
     fun getCarWashShopAroundHere(latitude: Double, longitude: Double, distance: Int = 4) =
@@ -62,6 +63,7 @@ class MapViewModel @Inject constructor(
             }
         }
     }
+
 
     fun sortByDistance(data: List<Item>) =
         data.sortedBy { it.distance }

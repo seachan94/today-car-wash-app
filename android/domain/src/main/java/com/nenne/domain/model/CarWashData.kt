@@ -16,11 +16,14 @@ data class Item(
     val latitude : Double,
     val longitude : Double,
 ):java.io.Serializable {
+
     fun distanceToString() = "${distance.toInt()} KM"
+
     fun typeToTextView() = when(type){
         ShopType.AUTO -> "자동 세차"
         else -> "셀프 세차"
     }
+
 }
 
 @Serializable

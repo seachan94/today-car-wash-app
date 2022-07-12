@@ -17,18 +17,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.UiThread
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
-import com.naver.maps.map.overlay.CircleOverlay
-import com.naver.maps.map.overlay.InfoWindow
-import com.naver.maps.map.overlay.LocationOverlay
+import com.naver.maps.map.overlay.*
 import com.naver.maps.map.util.FusedLocationSource
 import com.nenne.domain.model.Item
 import com.nenne.domain.model.ShopType
 import com.nenne.domain.model.state.NetworkResultState
 import com.nenne.presentation.base.BaseFragment
+import com.nenne.presentation.model.ClusteredItem
+import com.nenne.presentation.util.getClusteredItem
 import com.nenne.presentation.util.getLatLng
 import com.nenne.presentation.util.setImgFromDrawable
 import com.nenne.presentation.util.zoomToDistance
@@ -36,6 +38,9 @@ import com.nocompany.presentation.R
 import com.nocompany.presentation.databinding.CustomMakerBinding
 import com.nocompany.presentation.databinding.FragmentMapBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import ted.gun0912.clustering.naver.TedNaverClustering
 
 @AndroidEntryPoint
 class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_map),
@@ -47,8 +52,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
     private val locationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val responsePermissions = permissions.entries.filter {
-                (it.key == Manifest.permission.ACCESS_COARSE_LOCATION) ||
-                        (it.key == Manifest.permission.ACCESS_FINE_LOCATION)
+                (it.key == Manifest.permission.ACCESS_COARSE_LOCATION) || (it.key == Manifest.permission.ACCESS_FINE_LOCATION)
             }
             if (responsePermissions.filter { it.value == true }.size == locationPermission.size) {
                 initializeFirstLocationSet()
@@ -61,13 +65,12 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
     private lateinit var mNaverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
 
-
+    var isFirstAttach = false
     private val mLocationListener = LocationListener {
         viewModel.currentLocation = it.latitude getLatLng it.longitude
         initializeNaverMap()
     }
 
-    private var infoWindows = mutableListOf<InfoWindow>()
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun initViewStatus() = with(binding) {
@@ -76,12 +79,11 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         filter.setOnClickListener { }
         detailLayer.setOnClickListener {
             navigate(R.id.action_mapFragment_to_detailCarWashShop,
-            bundleOf("data" to viewModel.detailData.value))
+                bundleOf("data" to viewModel.detailData.value))
         }
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         searchHere.setOnClickListener {
             searchCarWashLocation()
-
             viewModel.getReverseGeoCode(mNaverMap.cameraPosition.target)
         }
         vm = viewModel
@@ -116,7 +118,9 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         viewModel.resultState.asLiveData().observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResultState.Success -> {
-                    setWindowInfo(it.data)
+                    setClusteredMarker(it.data.map {
+                        it.getClusteredItem()
+                    })
                 }
                 else -> {
                     Log.d(TAG, "observeData: $it")
@@ -126,59 +130,57 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
 
     }
 
-    @SuppressLint("MissingPermission")
-    private fun initializeFirstLocationSet() {
-        if (::mLocationManager.isInitialized.not()) {
-            mLocationManager =
-                requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+    private fun setClusteredMarker(items: List<ClusteredItem>) {
+
+        if (items.isEmpty()) {
+            binding.detailLayer.isGone = true
+            Toast.makeText(requireContext(), "근처에 세차장이 없어요", Toast.LENGTH_SHORT).show()
+            return
         }
 
-        val minTime = 1500L
-        val minDistance = 100f
-        with(mLocationManager) {
-            requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, minTime, minDistance, mLocationListener
-            )
-            requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, minTime, minDistance, mLocationListener
-            )
+        val nearestShop = items.first()
+        if(isFirstAttach){
+            isFirstAttach = true
+            mNaverMap.cameraPosition = CameraPosition(nearestShop.latitude getLatLng nearestShop.longitude,mNaverMap.cameraPosition.zoom)
         }
-    }
+        binding.detailLayer.isVisible = true
+        viewModel.detailData.value = nearestShop
 
 
-    private fun setWindowInfo(items: List<Item>) {
-        infoWindows.forEach { it.close() }
-
-        binding.detailLayer.isGone = false
-        items.sortedBy { it.distance }
-            .also {
-                if (it.isNotEmpty()) {
-                    viewModel.detailData.value = it[0]
-                    if (!viewModel.isFirstBooting) {
-                        mNaverMap.moveCamera(CameraUpdate.scrollTo(it[0].latitude getLatLng it[0].longitude))
-                        viewModel.isFirstBooting = true
+        val tedClustering =
+            TedNaverClustering.with<ClusteredItem>(requireContext(), mNaverMap)
+                .customMarker {
+                    Marker(it.latitude getLatLng it.longitude).apply {
+                        icon = OverlayImage.fromView(getMarkerCustomView(it.type))
                     }
-                } else {
-                    binding.detailLayer.isGone = true
-                    Toast.makeText(requireContext(),"근처에 세차장이 없어요",Toast.LENGTH_SHORT).show()
                 }
-            }
-            .forEach { data ->
-                infoWindows.add(
-                    InfoWindow().apply {
-                        adapter = setWindowInfoAdapter(data.type)
-                        position = data.latitude getLatLng data.longitude
-                        setOnClickListener { _ ->
-                            viewModel.detailData.value = data
-                            if (binding.detailLayer.isGone) {
-                                binding.detailLayer.visibility = View.VISIBLE
-                            }
-                            true
-                        }
-                        open(mNaverMap)
-                    })
-            }
+                .markerClickListener {
+                    viewModel.detailData.value = it
+                    binding.detailLayer.isVisible = true
+                }
+                .minClusterSize(10)
+                .make()
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+            tedClustering.clearItems()
+            tedClustering.addItems(items)
+        }
+
     }
+
+    fun getMarkerCustomView(type: ShopType) = CustomMakerBinding.inflate(layoutInflater).apply {
+        when (type) {
+            ShopType.AUTO -> {
+                shopName.text = "자동 세차"
+                carwashImg.setImageResource(R.drawable.location_black)
+                shopName.setTextColor(Color.BLACK)
+            }
+            else -> {
+                shopName.text = "셀프 세차"
+            }
+        }
+    }.root
 
     private fun setWindowInfoAdapter(type: ShopType) = object : InfoWindow.ViewAdapter() {
         override fun getView(p0: InfoWindow): View {
@@ -194,6 +196,24 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
                     }
                 }
             }.root
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun initializeFirstLocationSet() {
+        if (::mLocationManager.isInitialized.not()) {
+            mLocationManager =
+                requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        }
+        val minTime = 1500L
+        val minDistance = 100f
+        with(mLocationManager) {
+            requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, minTime, minDistance, mLocationListener
+            )
+            requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, minTime, minDistance, mLocationListener
+            )
         }
     }
 
@@ -220,7 +240,6 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         viewModel.getReverseGeoCode(viewModel.currentLocation)
         searchCarWashLocation()
 
-      
     }
 
 
