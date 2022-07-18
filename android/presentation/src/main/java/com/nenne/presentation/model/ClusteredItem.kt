@@ -15,4 +15,10 @@ data class ClusteredItem(
     override fun getTedLatLng(): TedLatLng {
         return TedLatLng(latitude,longitude)
     }
+    fun distanceToString() = "${distance.toInt()} KM"
+
+    fun typeToTextView() = when(type){
+        ShopType.AUTO -> "자동 세차"
+        else -> "셀프 세차"
+    }
 }

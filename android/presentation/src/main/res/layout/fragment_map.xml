@@ -10,9 +10,11 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wholeLayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.nenne.presentation.map.CarWashMapFragment">
+
 
         <androidx.cardview.widget.CardView
             android:id="@+id/searchCardView"
@@ -110,6 +112,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/iconLayer"
             android:layout_width="match_parent"
@@ -163,6 +166,8 @@
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:background="#ffffff"
+            android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:layout_editor_absoluteX="0dp">
 
@@ -217,7 +222,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="3.6KM" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

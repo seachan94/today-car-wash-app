@@ -3,8 +3,10 @@ package com.nenne.presentation.map
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.pm.ActivityInfo
 import android.graphics.Color
+import android.graphics.PointF
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
@@ -15,6 +17,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.UiThread
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
@@ -29,17 +33,17 @@ import com.nenne.domain.model.Item
 import com.nenne.domain.model.ShopType
 import com.nenne.domain.model.state.NetworkResultState
 import com.nenne.presentation.base.BaseFragment
+import com.nenne.presentation.data.CarShopType
+import com.nenne.presentation.data.datastore.UserSelectedDataStore
 import com.nenne.presentation.model.ClusteredItem
-import com.nenne.presentation.util.getClusteredItem
-import com.nenne.presentation.util.getLatLng
-import com.nenne.presentation.util.setImgFromDrawable
-import com.nenne.presentation.util.zoomToDistance
+import com.nenne.presentation.util.*
 import com.nocompany.presentation.R
 import com.nocompany.presentation.databinding.CustomMakerBinding
 import com.nocompany.presentation.databinding.FragmentMapBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import ted.gun0912.clustering.TedClustering
 import ted.gun0912.clustering.naver.TedNaverClustering
 
 @AndroidEntryPoint
@@ -64,8 +68,13 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
     private lateinit var mLocationManager: LocationManager
     private lateinit var mNaverMap: NaverMap
     private lateinit var locationSource: FusedLocationSource
-
+    private var circleOverlay = CircleOverlay()
+    
+    lateinit var tedClustering : TedNaverClustering<ClusteredItem>
+    lateinit var userSelectedDataStore : UserSelectedDataStore
     var isFirstAttach = false
+    
+    
     private val mLocationListener = LocationListener {
         viewModel.currentLocation = it.latitude getLatLng it.longitude
         initializeNaverMap()
@@ -74,14 +83,17 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun initViewStatus() = with(binding) {
+        
         locationPermissionLauncher.launch(locationPermission)
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        userSelectedDataStore = UserSelectedDataStore(requireContext())
+        
         location.setOnClickListener { moveToCameraMyLocation() }
-        filter.setOnClickListener { }
+        filter.setOnClickListener { makeFilterDialog() }
         detailLayer.setOnClickListener {
             navigate(R.id.action_mapFragment_to_detailCarWashShop,
                 bundleOf("data" to viewModel.detailData.value))
         }
-        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         searchHere.setOnClickListener {
             searchCarWashLocation()
             viewModel.getReverseGeoCode(mNaverMap.cameraPosition.target)
@@ -90,7 +102,29 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         observeData()
     }
 
+    val dialogList = arrayOf("전체","자동만","셀프만")
+    var checkedPosition = 0
 
+
+    private fun makeFilterDialog(){
+
+        AlertDialog.Builder(requireContext())
+            .setSingleChoiceItems(dialogList,checkedPosition) { _, selected ->
+                checkedPosition = selected
+            }
+            .setPositiveButton("완료") { _, _ ->
+                viewLifecycleOwner.lifecycleScope.launch{
+                    userSelectedDataStore.updateMapCarWashShopFilterType(
+                        when (checkedPosition) {
+                            0 -> CarShopType.ALL
+                            1 -> CarShopType.AUTO
+                            else -> CarShopType.SELF
+                        }
+                    )
+                }
+            }
+            .show()
+    }
     private fun initializeNaverMap() = with(binding) {
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapFragment) as MapFragment?
             ?: MapFragment.newInstance().also {
@@ -113,21 +147,43 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         viewModel.getCarWashShopAroundHere(latitude, longitude, zoomLevel.zoomToDistance())
     }
 
+    private fun drawRangeOnMap(){
+
+        val cameraPosition = mNaverMap.cameraPosition
+        val latitude = cameraPosition.target.latitude
+        val longitude = cameraPosition.target.longitude
+        val zoomLevel = cameraPosition.zoom
+
+        circleOverlay.apply{
+            color = Color.TRANSPARENT
+            center = latitude getLatLng longitude
+            radius = zoomLevel.getRadiusForRange()
+            map = mNaverMap
+            outlineWidth = 5
+            outlineColor = ContextCompat.getColor(requireContext(),R.color.APPCOLOR)
+        }
+    }
+
     private fun observeData() {
 
         viewModel.resultState.asLiveData().observe(viewLifecycleOwner) {
             when (it) {
                 is NetworkResultState.Success -> {
-                    setClusteredMarker(it.data.map {
-                        it.getClusteredItem()
-                    })
+                    setClusteredMarker(it.data.map { it.getClusteredItem() })
+                    drawRangeOnMap()
+                }
+                is NetworkResultState.Loading ->{
+
                 }
                 else -> {
-                    Log.d(TAG, "observeData: $it")
+                    Toast.makeText(requireContext(),"잠시 오류가 있습니다 잠시 후 사용해주세요",Toast.LENGTH_SHORT).show()
                 }
             }
         }
 
+        userSelectedDataStore.mapCarWashShopFilterType.asLiveData().observe(viewLifecycleOwner){
+            Log.d(TAG, "observeData: $it")
+        }
     }
 
 
@@ -140,7 +196,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         }
 
         val nearestShop = items.first()
-        if(isFirstAttach){
+        if(!isFirstAttach){
             isFirstAttach = true
             mNaverMap.cameraPosition = CameraPosition(nearestShop.latitude getLatLng nearestShop.longitude,mNaverMap.cameraPosition.zoom)
         }
@@ -148,7 +204,19 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         viewModel.detailData.value = nearestShop
 
 
-        val tedClustering =
+        if(::tedClustering.isInitialized.not()){
+            initializedTedNaverClustered()
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+            tedClustering.clearItems()
+            tedClustering.addItems(items)
+        }
+
+    }
+
+    fun initializedTedNaverClustered(){
+        tedClustering =
             TedNaverClustering.with<ClusteredItem>(requireContext(), mNaverMap)
                 .customMarker {
                     Marker(it.latitude getLatLng it.longitude).apply {
@@ -161,14 +229,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
                 }
                 .minClusterSize(10)
                 .make()
-
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
-            tedClustering.clearItems()
-            tedClustering.addItems(items)
-        }
-
     }
-
     fun getMarkerCustomView(type: ShopType) = CustomMakerBinding.inflate(layoutInflater).apply {
         when (type) {
             ShopType.AUTO -> {
@@ -182,22 +243,6 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         }
     }.root
 
-    private fun setWindowInfoAdapter(type: ShopType) = object : InfoWindow.ViewAdapter() {
-        override fun getView(p0: InfoWindow): View {
-            return CustomMakerBinding.inflate(layoutInflater).apply {
-                when (type) {
-                    ShopType.AUTO -> {
-                        shopName.text = "자동 세차"
-                        carwashImg.setImageResource(R.drawable.location_black)
-                        shopName.setTextColor(Color.BLACK)
-                    }
-                    else -> {
-                        shopName.text = "셀프 세차"
-                    }
-                }
-            }.root
-        }
-    }
 
     @SuppressLint("MissingPermission")
     private fun initializeFirstLocationSet() {

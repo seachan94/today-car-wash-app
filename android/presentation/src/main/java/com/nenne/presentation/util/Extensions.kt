@@ -14,11 +14,16 @@ fun Double.zoomToDistance() =
         else->4
     }
 
+fun Double.getRadiusForRange() =
+    this.zoomToDistance()*1000.0
+
 fun Item.getClusteredItem() =
     ClusteredItem(this.name,this.address,this.type, this.distance,this.latitude,this.longitude)
 
 
 infix fun Double.getLatLng(longitude : Double) : LatLng =
     LatLng(this,longitude)
+
+
 
 
