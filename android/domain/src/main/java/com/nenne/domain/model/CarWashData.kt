@@ -15,11 +15,7 @@ data class Item(
     val distance : Double,
     val latitude : Double,
     val longitude : Double,
-):java.io.Serializable {
-
-
-
-}
+)
 
 @Serializable
 enum class ShopType{

@@ -11,7 +11,7 @@ data class ClusteredItem(
     val distance : Double,
     val latitude : Double,
     val longitude : Double,
-):TedClusterItem {
+):TedClusterItem,java.io.Serializable {
     override fun getTedLatLng(): TedLatLng {
         return TedLatLng(latitude,longitude)
     }

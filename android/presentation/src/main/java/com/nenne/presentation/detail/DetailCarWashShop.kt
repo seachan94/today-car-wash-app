@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.nenne.domain.model.Item
 import com.nenne.domain.model.ShopType
 import com.nenne.presentation.base.BaseFragment
+import com.nenne.presentation.model.ClusteredItem
 import com.nocompany.presentation.R
 import com.nocompany.presentation.databinding.FragmentDetailCarWashShopBinding
 
@@ -16,8 +17,10 @@ class DetailCarWashShop : BaseFragment<FragmentDetailCarWashShopBinding>(R.layou
 
 
     override fun initViewStatus() =with(binding){
-        binding.data = arguments?.getSerializable("data") as Item
-        backBtn.setOnClickListener { navigateUp() }
+        binding.data = arguments?.getSerializable("data") as ClusteredItem
+        backBtn.setOnClickListener {
+            navigateUp()
+        }
     }
 
 }

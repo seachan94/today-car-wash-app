@@ -13,11 +13,11 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
+private val Context.userSelectedDataStore: DataStore<Preferences> by preferencesDataStore("user_selected")
+
 class UserSelectedDataStore(
     val context: Context,
 ) {
-
-    private val Context.userSelectedDataStore: DataStore<Preferences> by preferencesDataStore("user_selected")
 
     val mapCarWashShopFilterType = context.userSelectedDataStore.data
         .catch { e->

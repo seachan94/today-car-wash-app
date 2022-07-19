@@ -5,7 +5,7 @@
     <data>
         <variable
             name="data"
-            type="com.nenne.domain.model.Item" />
+            type="com.nenne.presentation.model.ClusteredItem" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"
