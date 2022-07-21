@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
@@ -93,9 +95,8 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         location.setOnClickListener { moveToCameraMyLocation() }
         filter.setOnClickListener { makeFilterDialog() }
         detailLayer.setOnClickListener {
-            navigate(R.id.action_mapFragment_to_detailCarWashShop,
-                bundleOf("data" to viewModel.detailData.value))
-//            activity?.supportFragmentManager?.beginTransaction()?.add(R.id.main_frame_layout,DetailCarWashShop())?.commit()
+            addFragment(DetailCarWashShop.detailCarWashMapFragment(viewModel.detailData.value),
+                DetailCarWashShop.FRAGMENT_TAG)
         }
         searchHere.setOnClickListener {
             searchCarWashLocation()
@@ -151,10 +152,7 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
         viewModel.getCarWashShopAroundHere(latitude, longitude, zoomLevel.zoomToDistance())
     }
 
-    override fun onPause() {
-        super.onPause()
-        Log.d("seachan", "onPause: ")
-    }
+
     private fun drawRangeOnMap() {
 
         val cameraPosition = mNaverMap.cameraPosition
@@ -276,6 +274,17 @@ class CarWashMapFragment : BaseFragment<FragmentMapBinding>(R.layout.fragment_ma
                     (filterType == CarShopType.AUTO && it.type == ShopType.AUTO) ||
                     (filterType == CarShopType.SELF && it.type == ShopType.SELF)
         }
+
+    private fun addFragment(fragment: Fragment, tag: String) {
+
+        requireActivity().supportFragmentManager.commit {
+            add(
+                R.id.main_frame_layout,
+                DetailCarWashShop.detailCarWashMapFragment(viewModel.detailData.value),
+                tag
+            ).show(fragment)
+        }
+    }
 
     @SuppressLint("MissingPermission")
     private fun initializeFirstLocationSet() {

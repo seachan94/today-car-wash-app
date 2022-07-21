@@ -9,7 +9,7 @@
     </data>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="#E3E1E1"
         android:orientation="vertical">
 
@@ -287,8 +287,13 @@
                         app:layout_constraintTop_toBottomOf="@id/textInfo"
                         android:paddingTop="20dp"
                         app:layout_constraintStart_toStartOf="parent"/>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"/>
     </LinearLayout>
 </layout>
